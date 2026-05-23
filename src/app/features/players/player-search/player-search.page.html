@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Buscar jugadores
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item>
+
+    <ion-input
+      label="Buscar jugador"
+      [value]="query()"
+      (ionInput)="query.set($any($event.target).value)">
+    </ion-input>
+
+  </ion-item>
+
+  <ion-button
+    expand="block"
+    (click)="search()">
+
+    Buscar
+
+  </ion-button>
+
+  @for (player of results(); track player.externalId) {
+
+    <ion-card>
+
+      @if (player.imageUrl) {
+
+        <ion-img [src]="player.imageUrl"></ion-img>
+
+      }
+
+      <ion-card-header>
+
+        <ion-card-title>
+          {{ player.name }}
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <p>
+          {{ player.nationality }}
+        </p>
+
+        <p>
+          Edad: {{ player.age }}
+        </p>
+
+        <ion-button
+          expand="block"
+          (click)="importPlayer(player.externalId)">
+
+          Importar jugador
+
+        </ion-button>
+
+      </ion-card-content>
+
+    </ion-card>
+
+  }
+
+</ion-content>

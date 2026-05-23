@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>
+
+      Crear jugador
+
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item>
+
+    <ion-input
+      label="Nombre"
+      [value]="name()"
+      (ionInput)="name.set($any($event.detail).value)">
+    </ion-input>
+
+  </ion-item>
+
+  <ion-item>
+
+    <ion-input
+      label="Equipo"
+      [value]="team()"
+      (ionInput)="team.set($any($event.detail).value)">
+    </ion-input>
+
+  </ion-item>
+
+  <ion-item>
+
+    <ion-input
+      label="Liga"
+      [value]="league()"
+      (ionInput)="league.set($any($event.detail).value)">
+    </ion-input>
+
+  </ion-item>
+
+  <ion-button
+    expand="block"
+    (click)="takePicture()">
+
+    Tomar fotografía
+
+  </ion-button>
+
+  @if (image()) {
+
+    <ion-img [src]="image()"></ion-img>
+
+  }
+
+  <ion-button
+    expand="block"
+    (click)="createPlayer()">
+
+    Crear jugador
+
+  </ion-button>
+
+</ion-content>

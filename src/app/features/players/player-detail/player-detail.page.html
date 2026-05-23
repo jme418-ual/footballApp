@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>
+
+      {{ player()?.name }}
+
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  @if (player()) {
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          {{ player()?.name }}
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <p>
+          Equipo: {{ player()?.team }}
+        </p>
+
+        <p>
+          Liga: {{ player()?.league }}
+        </p>
+
+      </ion-card-content>
+
+    </ion-card>
+
+  }
+
+  <ion-item>
+
+    <ion-input
+      type="number"
+      label="Valoración"
+      [value]="rating()"
+      (ionInput)="rating.set(+$any($event.target).value)">
+    </ion-input>
+
+  </ion-item>
+
+  <ion-item>
+
+    <ion-textarea
+      label="Comentario"
+      [value]="text()"
+      (ionInput)="text.set($any($event.target).value)">
+    </ion-textarea>
+
+  </ion-item>
+
+  <ion-button
+    expand="block"
+    (click)="createComment()">
+
+    Crear comentario
+
+  </ion-button>
+
+  @for (comment of comments(); track comment.id) {
+
+    <ion-card>
+
+      <ion-card-content>
+
+        <p>
+          {{ comment.text }}
+        </p>
+
+        <p>
+          Valoración: {{ comment.rating }}
+        </p>
+
+        <p>
+          Latitud: {{ comment.latitude }}
+        </p>
+
+        <p>
+          Longitud: {{ comment.longitude }}
+        </p>
+
+      </ion-card-content>
+
+    </ion-card>
+
+  }
+
+</ion-content>
