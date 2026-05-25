@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, inject } from '@angular/core';
 import {
   IonContent,
   IonHeader,
@@ -9,7 +9,9 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonImg,
-  IonButton
+  IonButton,
+  IonButtons,
+  IonMenuButton
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { PlayersService } from '../../../core/services/players.service';
@@ -26,14 +28,12 @@ import { RouterLink } from '@angular/router';
     IonHeader,
     IonTitle,
     IonToolbar,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
-    IonImg,
     IonButton,
-    RouterLink
-  ]
+    RouterLink,
+    IonButtons,
+    IonMenuButton
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PlayersListPage {
 

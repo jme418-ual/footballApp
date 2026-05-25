@@ -1,3 +1,66 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <ion-menu contentId="main-content">
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Football App</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item routerLink="/players" routerDirection="root">
+          Jugadores
+        </ion-item>
+
+        <ion-item routerLink="/players/local-search" routerDirection="root">
+          Búsqueda local
+        </ion-item>
+
+        @if (!authService.isLoggedIn()) {
+          <ion-item routerLink="/login" routerDirection="root">
+            Login
+          </ion-item>
+
+          <ion-item routerLink="/register" routerDirection="root">
+            Registro
+          </ion-item>
+        }
+
+        @if (authService.isLoggedIn()) {
+          <ion-item routerLink="/players/search" routerDirection="root">
+            Buscar en API externa
+          </ion-item>
+
+          <ion-item routerLink="/players/create" routerDirection="root">
+            Crear jugador
+          </ion-item>
+
+          <ion-item routerLink="/players/ideal-team" routerDirection="root">
+            Equipo ideal
+          </ion-item>
+
+          @if (authService.isLoggedIn()) {
+            <ion-item routerLink="/news" routerDirection="root">
+              Noticias CORBA
+            </ion-item>
+          }
+
+          @if (authService.isAdmin()) {
+            <ion-item routerLink="/admin/news" routerDirection="root">
+              Alta noticias
+            </ion-item>
+          }
+
+          <ion-item button (click)="logout()">
+            Cerrar sesión
+          </ion-item>
+        }
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
 </ion-app>

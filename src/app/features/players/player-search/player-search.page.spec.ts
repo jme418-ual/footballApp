@@ -1,5 +1,6 @@
 /// <reference types="jasmine" />
 
+import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayerSearchPage } from './player-search.page';
 
@@ -10,6 +11,11 @@ describe('PlayerSearchPage', () => {
   let fixture: ComponentFixture<PlayerSearchPage>;
 
   beforeEach(() => {
+
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient()]
+    });
+
     fixture = TestBed.createComponent(PlayerSearchPage);
     component = fixture.componentInstance;
     fixture.detectChanges();

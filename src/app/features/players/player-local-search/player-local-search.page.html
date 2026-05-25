@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Búsqueda local</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item>
+    <ion-input
+      label="Nombre"
+      [value]="name()"
+      (ionInput)="name.set($any($event.detail).value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      label="Equipo"
+      [value]="team()"
+      (ionInput)="team.set($any($event.detail).value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      label="Liga"
+      [value]="league()"
+      (ionInput)="league.set($any($event.detail).value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      label="Fecha de alta"
+      type="date"
+      [value]="createdAt()"
+      (ionInput)="createdAt.set($any($event.detail).value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-button expand="block" (click)="search()">
+    Buscar
+  </ion-button>
+
+  @for (player of results(); track player.id) {
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>{{ player.name }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>Equipo: {{ player.team }}</p>
+        <p>Liga: {{ player.league }}</p>
+        <p>Fecha alta: {{ player.createdAt }}</p>
+
+        <ion-button
+          expand="block"
+          [routerLink]="['/players', player.id]">
+          Ver detalle
+        </ion-button>
+      </ion-card-content>
+
+    </ion-card>
+
+  }
+
+</ion-content>

@@ -1,11 +1,39 @@
-import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { Component, inject } from '@angular/core';
+import {
+  IonApp,
+  IonRouterOutlet,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonList,
+  IonItem
+} from '@ionic/angular/standalone';
+
+import { RouterLink } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet],
+  imports: [
+    RouterLink,
+    IonApp,
+    IonRouterOutlet,
+    IonMenu,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem
+  ]
 })
 export class AppComponent {
-  constructor() {}
+  authService = inject(AuthService);
+
+  async logout() {
+    await this.authService.logout();
+  }
 }

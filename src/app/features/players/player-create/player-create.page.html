@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
 
-    <ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/players"></ion-back-button>
+    </ion-buttons>
 
-      Crear jugador
-
-    </ion-title>
+    <ion-title>Crear jugador</ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -42,19 +42,64 @@
 
   </ion-item>
 
-  <ion-button
-    expand="block"
-    (click)="takePicture()">
+  <ion-item>
 
-    Tomar fotografía
+    <ion-input
+      label="URL de imagen"
+      [value]="imageUrl()"
+      (ionInput)="imageUrl.set($any($event.detail).value)">
+    </ion-input>
 
+  </ion-item>
+
+  <ion-button expand="block" fill="outline" (click)="takePicture()">
+    Usar cámara
   </ion-button>
 
   @if (image()) {
 
     <ion-img [src]="image()"></ion-img>
 
+  } @else if (imageUrl()) {
+
+    <ion-img [src]="imageUrl()"></ion-img>
+
   }
+
+  <ion-button
+    expand="block"
+    fill="outline"
+    (click)="loadCurrentLocation()">
+
+    Usar ubicación actual
+
+  </ion-button>
+
+  <ion-item>
+
+    <ion-input
+      type="number"
+      label="Latitud"
+      [value]="latitude()"
+      (ionInput)="latitude.set($any($event.detail).value ? +$any($event.detail).value : null)">
+    </ion-input>
+
+  </ion-item>
+
+  <ion-item>
+
+    <ion-input
+      type="number"
+      label="Longitud"
+      [value]="longitude()"
+      (ionInput)="longitude.set($any($event.detail).value ? +$any($event.detail).value : null)">
+    </ion-input>
+
+  </ion-item>
+
+  <p class="helper-text">
+    Puedes usar la ubicación actual o editar manualmente las coordenadas antes de guardar.
+  </p>
 
   <ion-button
     expand="block"

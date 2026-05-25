@@ -32,4 +32,12 @@ export class CommentsService {
 
     return response.data;
   }
+
+  async deleteComment(id: number) {
+    return await firstValueFrom(
+      this.http.delete<ApiResponse<void>>(
+        `${environment.commentsUrl}/comments/${id}`
+      )
+    );
+  }
 }

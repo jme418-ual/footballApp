@@ -18,7 +18,9 @@ import {
   IonTextarea,
   IonInput,
   IonButton,
-  IonItem
+  IonItem,
+  IonButtons,
+  IonBackButton
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +29,8 @@ import { CommentsService } from '../../../core/services/comments.service';
 import { GeolocationService } from '../../../core/services/geolocation.service';
 import { Player } from '../../../core/models/player.model';
 import { Comment } from '../../../core/models/comment.model';
+import { AuthService } from '../../../core/services/auth.service';
+import { UiService } from '../../../core/services/ui.service';
 
 @Component({
   selector: 'app-player-detail',
@@ -46,7 +50,9 @@ import { Comment } from '../../../core/models/comment.model';
     IonTextarea,
     IonInput,
     IonButton,
-    IonItem
+    IonItem,
+    IonButtons,
+    IonBackButton
   ]
 })
 export class PlayerDetailPage {
@@ -55,11 +61,20 @@ export class PlayerDetailPage {
   private playersService = inject(PlayersService);
   private commentsService = inject(CommentsService);
   private geolocationService = inject(GeolocationService);
+  authService = inject(AuthService);
+  private uiService = inject(UiService);
 
   player = signal<Player | null>(null);
   comments = signal<Comment[]>([]);
   text = signal('');
   rating = signal(5);
+
+  editing = signal(false);
+
+  editName = signal('');
+  editTeam = signal('');
+  editLeague = signal('');
+  editImageUrl = signal('');
 
   playerId = Number(
     this.route.snapshot.paramMap.get('id')
@@ -79,6 +94,57 @@ export class PlayerDetailPage {
       players.find(p => p.id === this.playerId) ?? null;
 
     this.player.set(player);
+
+    if (player) {
+      this.editName.set(player.name);
+      this.editTeam.set(player.team ?? '');
+      this.editLeague.set(player.league ?? '');
+      this.editImageUrl.set(player.imageUrl ?? '');
+    }
+  }
+
+  async updatePlayer() {
+    const current = this.player();
+
+    if (!current || !current.id) {
+      return;
+    }
+
+    await this.playersService.updatePlayer(current.id, {
+      ...current,
+      name: this.editName(),
+      team: this.editTeam(),
+      league: this.editLeague(),
+      imageUrl: this.editImageUrl()
+    });
+
+    this.editing.set(false);
+
+    await this.playersService.loadPlayers();
+    await this.loadPlayer();
+
+    await this.uiService.showToast('Jugador actualizado correctamente', 'success');
+  }
+
+  async deletePlayer() {
+    const current = this.player();
+
+    if (!current || !current.id) {
+      return;
+    }
+
+    const confirmed =
+      confirm('¿Seguro que quieres eliminar este jugador?');
+
+    if (!confirmed) {
+      return;
+    }
+
+    await this.playersService.deletePlayer(current.id);
+
+    await this.uiService.showToast('Jugador eliminado correctamente', 'success');
+
+    window.history.back();
   }
 
   async loadComments() {
@@ -92,6 +158,16 @@ export class PlayerDetailPage {
   }
 
   async createComment() {
+
+    if (this.rating() < 0 || this.rating() > 5) {
+      await this.uiService.showToast('La valoración debe estar entre 0 y 5', 'warning');
+      return;
+    }
+
+    if (this.text().length > 1000) {
+      await this.uiService.showToast('El comentario no puede superar los 1000 caracteres', 'warning');
+      return;
+    }
 
     try {
 
@@ -130,13 +206,32 @@ export class PlayerDetailPage {
 
       await this.loadComments();
 
-      alert('Comentario creado correctamente');
+      await this.uiService.showToast('Comentario creado correctamente', 'success');
 
     } catch (error) {
 
       console.error(error);
 
-      alert('Error creando comentario');
+      await this.uiService.showToast('Error al crear el comentario', 'danger');
     }
+  }
+
+  async deleteComment(id: number | undefined) {
+    if (!id) {
+      return;
+    }
+
+    const confirmed =
+      confirm('¿Seguro que quieres borrar este comentario?');
+
+    if (!confirmed) {
+      return;
+    }
+
+    await this.commentsService.deleteComment(id);
+
+    await this.loadComments();
+
+    await this.uiService.showToast('Comentario eliminado correctamente', 'success');
   }
 }

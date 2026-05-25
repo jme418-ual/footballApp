@@ -1,68 +1,33 @@
 <ion-header>
   <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
     <ion-title>Jugadores</ion-title>
-
-    <ion-button
-      slot="end"
-      fill="clear"
-      (click)="logout()">
-
-      Logout
-
-    </ion-button>
 
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  <ion-button expand="block" routerLink="/players/search">
-    Buscar en API externa
-  </ion-button>
-
-  <ion-button expand="block" routerLink="/players/create">
-    Crear jugador
-  </ion-button>
-
-  <ion-button expand="block" routerLink="/news">
-    Noticias CORBA
-  </ion-button>
-
   @for (player of players(); track player.id) {
 
-    <ion-card>
+    <player-card
+      [name]="player.name"
+      [team]="player.team"
+      [league]="player.league"
+      [imageUrl]="player.imageUrl">
+    </player-card>
 
-      @if (player.imageUrl) {
-        <ion-img [src]="player.imageUrl"></ion-img>
-      }
+    <ion-button
+      expand="block"
+      [routerLink]="['/players', player.id]">
 
-      <ion-card-header>
-        <ion-card-title>
-          {{ player.name }}
-        </ion-card-title>
-      </ion-card-header>
+      Ver detalle
 
-      <ion-card-content>
-        <p>
-          <strong>Equipo:</strong>
-          {{ player.team }}
-        </p>
-
-        <p>
-          <strong>Liga:</strong>
-          {{ player.league }}
-        </p>
-
-        <ion-button
-          expand="block"
-          [routerLink]="['/players', player.id]">
-
-          Ver detalle
-
-        </ion-button>
-      </ion-card-content>
-
-    </ion-card>
+    </ion-button>
 
   }
 

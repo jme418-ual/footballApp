@@ -12,7 +12,9 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonImg
+  IonImg,
+  IonButtons,
+  IonBackButton
 } from '@ionic/angular/standalone';
 
 import { FormsModule } from '@angular/forms';
@@ -20,6 +22,7 @@ import { CommonModule } from '@angular/common';
 
 import { PlayersService } from '../../../core/services/players.service';
 import { ExternalPlayer } from '../../../core/models/external-player.model';
+import { UiService } from '../../../core/services/ui.service';
 
 @Component({
   selector: 'app-player-search',
@@ -39,12 +42,15 @@ import { ExternalPlayer } from '../../../core/models/external-player.model';
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-    IonImg
+    IonImg,
+    IonButtons,
+    IonBackButton
   ]
 })
 export class PlayerSearchPage {
 
   private playersService = inject(PlayersService);
+  private uiService = inject(UiService);
 
   query = signal('');
 
@@ -66,6 +72,6 @@ export class PlayerSearchPage {
       externalId
     );
 
-    alert('Jugador importado correctamente');
+    await this.uiService.showToast('Jugador importado correctamente', 'success');
   }
 }

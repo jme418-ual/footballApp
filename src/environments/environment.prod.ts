@@ -1,9 +1,9 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8081',
-  commentsUrl: 'http://localhost:8082',
-  newsUrl: 'http://localhost:8083',
+  apiUrl: 'http://unattached-unbanteringly-ruby.ngrok-free.dev/api',
+  commentsUrl: 'http://unattached-unbanteringly-ruby.ngrok-free.dev/api',
+  newsUrl: 'http://unattached-unbanteringly-ruby.ngrok-free.dev/api',
   firebaseConfig: {
     apiKey: 'AIzaSyAwPCWomgYlRoxVfJGSgd-yKsYYkNCwHRk',
     authDomain: 'footballapp-jme418.firebaseapp.com',

@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Equipo Ideal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-button
+    expand="block"
+    (click)="generate()"
+    [disabled]="loading()">
+
+    @if (loading()) {
+      Generando...
+    } @else {
+      Generar equipo ideal
+    }
+
+  </ion-button>
+
+  @if (result()) {
+
+    <ion-card>
+      <ion-card-content>
+        <pre>{{ result() }}</pre>
+      </ion-card-content>
+    </ion-card>
+
+  }
+
+</ion-content>

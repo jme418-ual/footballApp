@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar>
 
-    <ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/players"></ion-back-button>
+    </ion-buttons>
 
-      {{ player()?.name }}
-
-    </ion-title>
+    <ion-title>{{ player()?.name }}</ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -15,61 +15,122 @@
   @if (player()) {
 
     <ion-card>
-
       <ion-card-header>
-
         <ion-card-title>
-
           {{ player()?.name }}
-
         </ion-card-title>
-
       </ion-card-header>
-
       <ion-card-content>
-
         <p>
           Equipo: {{ player()?.team }}
         </p>
-
         <p>
           Liga: {{ player()?.league }}
         </p>
-
       </ion-card-content>
+    </ion-card>
 
+    
+    @if (authService.isAdmin()) {
+      <ion-button
+        expand="block"
+        fill="outline"
+        (click)="editing.set(!editing())">
+
+        @if (editing()) {
+          Cancelar edición
+        } @else {
+          Editar jugador
+        }
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        color="danger"
+        (click)="deletePlayer()">
+
+        Eliminar jugador
+      </ion-button>
+    }
+  }
+
+  @if (editing()) {
+
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-input
+            label="Nombre"
+            [value]="editName()"
+            (ionInput)="editName.set($any($event.detail).value)">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="Equipo"
+            [value]="editTeam()"
+            (ionInput)="editTeam.set($any($event.detail).value)">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="Liga"
+            [value]="editLeague()"
+            (ionInput)="editLeague.set($any($event.detail).value)">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="URL imagen"
+            [value]="editImageUrl()"
+            (ionInput)="editImageUrl.set($any($event.detail).value)">
+          </ion-input>
+        </ion-item>
+
+        <ion-button
+          expand="block"
+          (click)="updatePlayer()">
+
+          Guardar cambios
+
+        </ion-button>
+      </ion-card-content>
     </ion-card>
 
   }
 
-  <ion-item>
+  @if (authService.isLoggedIn()) {
+    <ion-item>
+      <ion-input
+        type="number"
+        label="Valoración"
+        min="0"
+        max="5"
+        [value]="rating()"
+        (ionInput)="rating.set(+$any($event.detail).value)">
+      </ion-input>
+    </ion-item>
 
-    <ion-input
-      type="number"
-      label="Valoración"
-      [value]="rating()"
-      (ionInput)="rating.set(+$any($event.target).value)">
-    </ion-input>
+    <ion-item>
+      <ion-textarea
+        label="Comentario"
+        maxlength="1000"
+        counter="true"
+        [value]="text()"
+        (ionInput)="text.set($any($event.detail).value)">
+      </ion-textarea>
+    </ion-item>
 
-  </ion-item>
+    <ion-button
+      expand="block"
+      (click)="createComment()">
 
-  <ion-item>
-
-    <ion-textarea
-      label="Comentario"
-      [value]="text()"
-      (ionInput)="text.set($any($event.target).value)">
-    </ion-textarea>
-
-  </ion-item>
-
-  <ion-button
-    expand="block"
-    (click)="createComment()">
-
-    Crear comentario
-
-  </ion-button>
+      Crear comentario
+    </ion-button>
+  }
 
   @for (comment of comments(); track comment.id) {
 
@@ -77,21 +138,25 @@
 
       <ion-card-content>
 
-        <p>
-          {{ comment.text }}
-        </p>
+        <p>{{ comment.text }}</p>
 
-        <p>
-          Valoración: {{ comment.rating }}
-        </p>
+        <p>Valoración: {{ comment.rating }}</p>
 
-        <p>
-          Latitud: {{ comment.latitude }}
-        </p>
+        <p>Latitud: {{ comment.latitude }}</p>
 
-        <p>
-          Longitud: {{ comment.longitude }}
-        </p>
+        <p>Longitud: {{ comment.longitude }}</p>
+
+        @if (authService.isAdmin()) {
+          <ion-button
+            expand="block"
+            color="danger"
+            fill="outline"
+            (click)="deleteComment(comment.id)">
+
+            Borrar comentario
+
+          </ion-button>
+        }
 
       </ion-card-content>
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 
 import {
   Camera,
@@ -13,16 +14,15 @@ export class CameraService {
 
   async takePicture(): Promise<string | undefined> {
 
+    const source = Capacitor.getPlatform() === 'web'
+      ? CameraSource.Photos
+      : CameraSource.Camera;
+
     const image = await Camera.getPhoto({
-
-      quality: 90,
-
+      quality: 80,
       allowEditing: false,
-
       resultType: CameraResultType.DataUrl,
-
-      source: CameraSource.Camera
-
+      source
     });
 
     return image.dataUrl;

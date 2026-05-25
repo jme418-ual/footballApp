@@ -10,11 +10,14 @@ import {
   IonToolbar,
   IonItem,
   IonInput,
-  IonButton
+  IonButton,
+  IonButtons,
+  IonBackButton
 } from '@ionic/angular/standalone';
 
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { UiService } from '../../../core/services/ui.service';
 
 @Component({
   selector: 'app-register',
@@ -28,13 +31,16 @@ import { AuthService } from '../../../core/services/auth.service';
     IonToolbar,
     IonItem,
     IonInput,
-    IonButton
+    IonButton,
+    IonButtons,
+    IonBackButton
   ]
 })
 export class RegisterPage {
 
   private authService = inject(AuthService);
   private router = inject(Router);
+  private uiService = inject(UiService);
 
   email = signal('');
   password = signal('');
@@ -51,7 +57,7 @@ export class RegisterPage {
 
     } catch (error) {
       console.error(error);
-      alert('Error de autenticación');
+      await this.uiService.showToast('Error de autenticación. Revisa el correo y la contraseña.', 'danger');
     }
   }
 }

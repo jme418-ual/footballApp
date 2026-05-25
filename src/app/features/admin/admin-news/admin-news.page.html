@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/news"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Alta noticia</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item>
+    <ion-input
+      label="Fecha"
+      [value]="fecha()"
+      (ionInput)="fecha.set($any($event.detail).value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      label="Nivel interés"
+      [value]="nivelInteres()"
+      (ionInput)="nivelInteres.set($any($event.detail).value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      label="Descripción corta"
+      [value]="descripcionCorta()"
+      (ionInput)="descripcionCorta.set($any($event.detail).value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-textarea
+      label="Descripción larga"
+      [value]="descripcionLarga()"
+      (ionInput)="descripcionLarga.set($any($event.detail).value)">
+    </ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-input
+      label="Etiquetas"
+      [value]="etiquetas()"
+      (ionInput)="etiquetas.set($any($event.detail).value)">
+    </ion-input>
+  </ion-item>
+
+  <ion-button expand="block" (click)="createNews()">
+    Crear noticia
+  </ion-button>
+
+</ion-content>

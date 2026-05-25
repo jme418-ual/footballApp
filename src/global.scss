@@ -65,3 +65,18 @@ ion-item {
   --background: #ffffff;
   margin-bottom: 12px;
 }
+
+ion-menu ion-content {
+  --background: #0f766e;
+}
+
+ion-menu ion-item {
+  --background: transparent;
+  --color: #ffffff;
+  font-weight: 600;
+}
+
+ion-menu ion-toolbar {
+  --background: #0f766e;
+  --color: #ffffff;
+}
