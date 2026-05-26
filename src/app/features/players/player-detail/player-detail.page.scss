@@ -1,0 +1,73 @@
+.player-summary {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 16px;
+}
+
+.action-row {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	margin: 0 auto 20px;
+	width: min(100%, 560px);
+}
+
+.action-button {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
+.form-shell {
+	display: flex;
+	justify-content: center;
+	margin: 0 auto 20px;
+	width: min(100%, 560px);
+}
+
+.compact-card {
+	width: 100%;
+	margin: 0;
+}
+
+.compact-form {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.compact-form ion-item {
+	width: 100%;
+}
+
+.submit-button {
+	margin-top: 4px;
+}
+
+.comments-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	width: min(100%, 560px);
+	margin: 0 auto;
+}
+
+.comment-card {
+	width: 100%;
+	margin: 0;
+}
+
+.comment-card-content {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.comment-card-content p {
+	margin: 0;
+}
+
+.comment-actions {
+	display: flex;
+	justify-content: flex-end;
+}

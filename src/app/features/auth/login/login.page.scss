@@ -1,0 +1,32 @@
+/* Reuse styling from register page to center and narrow login form */
+.login-page {
+  .form-container {
+    max-width: 520px;
+    width: 86%;
+    margin: 28px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  ion-item {
+    width: 100%;
+    --inner-padding-start: 12px;
+  }
+
+  ion-input {
+    width: 100%;
+  }
+
+  ion-button.primary-action {
+    width: 100%;
+    --border-radius: 10px;
+  }
+
+  ion-button.secondary-action[fill="clear"] {
+    width: auto;
+    align-self: center;
+    padding: 6px 12px;
+  }
+}

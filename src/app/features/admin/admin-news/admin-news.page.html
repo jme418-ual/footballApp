@@ -15,6 +15,7 @@
   <ion-item>
     <ion-input
       label="Fecha"
+      labelPlacement="floating"
       [value]="fecha()"
       (ionInput)="fecha.set($any($event.detail).value)">
     </ion-input>
@@ -23,6 +24,7 @@
   <ion-item>
     <ion-input
       label="Nivel interés"
+      labelPlacement="floating"
       [value]="nivelInteres()"
       (ionInput)="nivelInteres.set($any($event.detail).value)">
     </ion-input>
@@ -31,6 +33,7 @@
   <ion-item>
     <ion-input
       label="Descripción corta"
+      labelPlacement="floating"
       [value]="descripcionCorta()"
       (ionInput)="descripcionCorta.set($any($event.detail).value)">
     </ion-input>
@@ -39,6 +42,7 @@
   <ion-item>
     <ion-textarea
       label="Descripción larga"
+      labelPlacement="floating"
       [value]="descripcionLarga()"
       (ionInput)="descripcionLarga.set($any($event.detail).value)">
     </ion-textarea>
@@ -47,13 +51,19 @@
   <ion-item>
     <ion-input
       label="Etiquetas"
+      labelPlacement="floating"
       [value]="etiquetas()"
       (ionInput)="etiquetas.set($any($event.detail).value)">
     </ion-input>
   </ion-item>
 
-  <ion-button expand="block" (click)="createNews()">
+  <ion-button
+    expand="block"
+    [disabled]="!formIsValid()"
+    (click)="createNews()">
+
     Crear noticia
+
   </ion-button>
 
 </ion-content>

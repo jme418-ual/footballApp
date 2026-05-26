@@ -4,33 +4,33 @@
 
     <ion-header>
       <ion-toolbar>
-        <ion-title>Football App</ion-title>
+        <ion-title>footBallApp</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
-      <ion-list>
+      <ion-list class="burguer-list">
         <ion-item routerLink="/players" routerDirection="root">
           Jugadores
         </ion-item>
 
         <ion-item routerLink="/players/local-search" routerDirection="root">
-          Búsqueda local
+          Buscar jugadores
         </ion-item>
 
         @if (!authService.isLoggedIn()) {
           <ion-item routerLink="/login" routerDirection="root">
-            Login
+            Iniciar sesión
           </ion-item>
 
           <ion-item routerLink="/register" routerDirection="root">
-            Registro
+            Registrarse
           </ion-item>
         }
 
         @if (authService.isLoggedIn()) {
           <ion-item routerLink="/players/search" routerDirection="root">
-            Buscar en API externa
+            Buscar jugadores en API externa
           </ion-item>
 
           <ion-item routerLink="/players/create" routerDirection="root">
@@ -38,18 +38,16 @@
           </ion-item>
 
           <ion-item routerLink="/players/ideal-team" routerDirection="root">
-            Equipo ideal
+            Formar equipo ideal
           </ion-item>
 
-          @if (authService.isLoggedIn()) {
-            <ion-item routerLink="/news" routerDirection="root">
-              Noticias CORBA
-            </ion-item>
-          }
+          <ion-item routerLink="/news" routerDirection="root">
+            Noticias CORBA
+          </ion-item>
 
           @if (authService.isAdmin()) {
             <ion-item routerLink="/admin/news" routerDirection="root">
-              Alta noticias
+              Dar de alta noticia
             </ion-item>
           }
 

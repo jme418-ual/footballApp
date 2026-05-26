@@ -1,4 +1,5 @@
 import {
+  CUSTOM_ELEMENTS_SCHEMA,
   Component,
   inject,
   signal
@@ -12,8 +13,6 @@ import {
   IonTitle,
   IonToolbar,
   IonCard,
-  IonCardHeader,
-  IonCardTitle,
   IonCardContent,
   IonTextarea,
   IonInput,
@@ -35,6 +34,7 @@ import { UiService } from '../../../core/services/ui.service';
 @Component({
   selector: 'app-player-detail',
   templateUrl: './player-detail.page.html',
+  styleUrls: ['./player-detail.page.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -44,16 +44,15 @@ import { UiService } from '../../../core/services/ui.service';
     IonTitle,
     IonToolbar,
     IonCard,
-    IonCardHeader,
-    IonCardTitle,
     IonCardContent,
     IonTextarea,
     IonInput,
     IonButton,
     IonItem,
     IonButtons,
-    IonBackButton
-  ]
+    IonBackButton,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PlayerDetailPage {
 

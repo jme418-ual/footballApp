@@ -67,16 +67,21 @@ ion-item {
 }
 
 ion-menu ion-content {
-  --background: #0f766e;
+  --background: transparent;
 }
 
 ion-menu ion-item {
   --background: transparent;
-  --color: #ffffff;
+  --color: #000;
   font-weight: 600;
 }
 
 ion-menu ion-toolbar {
-  --background: #0f766e;
   --color: #ffffff;
+}
+
+ion-list.burguer-list ion-item {
+  --border-radius: 0;
+  --background: transparent;
+  margin-bottom: 0;
 }

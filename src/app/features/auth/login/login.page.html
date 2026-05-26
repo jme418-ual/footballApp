@@ -5,32 +5,53 @@
       <ion-back-button defaultHref="/players"></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Login</ion-title>
+    <ion-title>Inicio de sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding login-page">
 
-  <ion-item>
-    <ion-input
-      label="Email"
-      type="email"
-      [value]="email()"
-      (ionInput)="email.set($any($event.target).value)">
-    </ion-input>
-  </ion-item>
+  <div class="form-container">
 
-  <ion-item>
-    <ion-input
-      label="Contraseña"
-      type="password"
-      [value]="password()"
-      (ionInput)="password.set($any($event.target).value)">
-    </ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-input
+        label="Email"
+        labelPlacement="floating"
+        type="email"
+        [value]="email()"
+        (ionInput)="email.set($any($event.detail).value)">
+      </ion-input>
+    </ion-item>
 
-  <ion-button expand="block" (click)="login()">
-    Iniciar sesión
-  </ion-button>
+    <ion-item>
+      <ion-input
+        label="Contraseña"
+        labelPlacement="floating"
+        type="password"
+        [value]="password()"
+        (ionInput)="password.set($any($event.detail).value)">
+      </ion-input>
+    </ion-item>
+
+    <ion-button
+      expand="block"
+      class="primary-action"
+      [disabled]="!email() || !password()"
+      (click)="login()">
+
+      Iniciar sesión
+
+    </ion-button>
+
+    <ion-button
+      fill="clear"
+      class="secondary-action"
+      routerLink="/register">
+
+      Crear cuenta
+
+    </ion-button>
+
+  </div>
 
 </ion-content>

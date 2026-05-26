@@ -45,13 +45,22 @@ export class AdminNewsPage {
   etiquetas = signal('');
 
   async createNews() {
+
+    if (!this.formIsValid()) {
+      await this.uiService.showToast(
+        'Completa los campos obligatorios',
+        'warning'
+      );
+      return;
+    }
+
     try {
       await this.newsService.createNews({
-        fecha: this.fecha(),
-        nivelInteres: this.nivelInteres(),
-        descripcionCorta: this.descripcionCorta(),
-        descripcionLarga: this.descripcionLarga(),
-        etiquetas: this.etiquetas()
+        fecha: this.fecha().trim(),
+        nivelInteres: this.nivelInteres().trim(),
+        descripcionCorta: this.descripcionCorta().trim(),
+        descripcionLarga: this.descripcionLarga().trim(),
+        etiquetas: this.etiquetas().trim()
       });
 
       this.fecha.set('');
@@ -73,5 +82,14 @@ export class AdminNewsPage {
         'danger'
       );
     }
+  }
+
+  formIsValid(): boolean {
+    return !!(
+      this.fecha().trim() &&
+      this.nivelInteres().trim() &&
+      this.descripcionCorta().trim() &&
+      this.descripcionLarga().trim()
+    );
   }
 }

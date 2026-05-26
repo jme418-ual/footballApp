@@ -15,6 +15,7 @@
   <ion-item>
     <ion-input
       label="Nombre"
+      labelPlacement="floating"
       [value]="name()"
       (ionInput)="name.set($any($event.detail).value)">
     </ion-input>
@@ -23,6 +24,7 @@
   <ion-item>
     <ion-input
       label="Equipo"
+      labelPlacement="floating"
       [value]="team()"
       (ionInput)="team.set($any($event.detail).value)">
     </ion-input>
@@ -31,6 +33,7 @@
   <ion-item>
     <ion-input
       label="Liga"
+      labelPlacement="floating"
       [value]="league()"
       (ionInput)="league.set($any($event.detail).value)">
     </ion-input>
@@ -39,14 +42,20 @@
   <ion-item>
     <ion-input
       label="Fecha de alta"
+      labelPlacement="floating"
       type="date"
       [value]="createdAt()"
       (ionInput)="createdAt.set($any($event.detail).value)">
     </ion-input>
   </ion-item>
 
-  <ion-button expand="block" (click)="search()">
+  <ion-button
+    expand="block"
+    [disabled]="!name().trim() && !team().trim() && !league().trim() && !createdAt().trim()"
+    (click)="search()">
+
     Buscar
+
   </ion-button>
 
   @for (player of results(); track player.id) {

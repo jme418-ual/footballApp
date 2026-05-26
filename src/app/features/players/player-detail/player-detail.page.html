@@ -10,158 +10,173 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding player-detail-content">
 
-  @if (player()) {
+  @if (player(); as currentPlayer) {
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>
-          {{ player()?.name }}
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>
-          Equipo: {{ player()?.team }}
-        </p>
-        <p>
-          Liga: {{ player()?.league }}
-        </p>
-      </ion-card-content>
-    </ion-card>
+    <section class="player-summary">
+      <player-card
+        [name]="currentPlayer.name"
+        [team]="currentPlayer.team"
+        [league]="currentPlayer.league"
+        [imageUrl]="currentPlayer.imageUrl">
+      </player-card>
+    </section>
 
-    
     @if (authService.isAdmin()) {
-      <ion-button
-        expand="block"
-        fill="outline"
-        (click)="editing.set(!editing())">
+      <div class="action-row">
+        <ion-button
+          fill="outline"
+          class="action-button"
+          (click)="editing.set(!editing())">
 
-        @if (editing()) {
-          Cancelar edición
-        } @else {
-          Editar jugador
-        }
-      </ion-button>
+          @if (editing()) {
+            Cancelar edición
+          } @else {
+            Editar jugador
+          }
+        </ion-button>
 
-      <ion-button
-        expand="block"
-        color="danger"
-        (click)="deletePlayer()">
+        <ion-button
+          color="danger"
+          class="action-button"
+          (click)="deletePlayer()">
 
-        Eliminar jugador
-      </ion-button>
+          Eliminar jugador
+        </ion-button>
+      </div>
     }
   }
 
   @if (editing()) {
 
-    <ion-card>
-      <ion-card-content>
-        <ion-item>
-          <ion-input
-            label="Nombre"
-            [value]="editName()"
-            (ionInput)="editName.set($any($event.detail).value)">
-          </ion-input>
-        </ion-item>
+    <div class="form-shell">
+      <ion-card class="compact-card">
+        <ion-card-content class="compact-form">
+          <ion-item>
+            <ion-input
+              label="Nombre"
+              labelPlacement="floating"
+              [value]="editName()"
+              (ionInput)="editName.set($any($event.detail).value)">
+            </ion-input>
+          </ion-item>
 
-        <ion-item>
-          <ion-input
-            label="Equipo"
-            [value]="editTeam()"
-            (ionInput)="editTeam.set($any($event.detail).value)">
-          </ion-input>
-        </ion-item>
+          <ion-item>
+            <ion-input
+              label="Equipo"
+              labelPlacement="floating"
+              [value]="editTeam()"
+              (ionInput)="editTeam.set($any($event.detail).value)">
+            </ion-input>
+          </ion-item>
 
-        <ion-item>
-          <ion-input
-            label="Liga"
-            [value]="editLeague()"
-            (ionInput)="editLeague.set($any($event.detail).value)">
-          </ion-input>
-        </ion-item>
+          <ion-item>
+            <ion-input
+              label="Liga"
+              labelPlacement="floating"
+              [value]="editLeague()"
+              (ionInput)="editLeague.set($any($event.detail).value)">
+            </ion-input>
+          </ion-item>
 
-        <ion-item>
-          <ion-input
-            label="URL imagen"
-            [value]="editImageUrl()"
-            (ionInput)="editImageUrl.set($any($event.detail).value)">
-          </ion-input>
-        </ion-item>
+          <ion-item>
+            <ion-input
+              label="URL imagen"
+              labelPlacement="floating"
+              [value]="editImageUrl()"
+              (ionInput)="editImageUrl.set($any($event.detail).value)">
+            </ion-input>
+          </ion-item>
 
-        <ion-button
-          expand="block"
-          (click)="updatePlayer()">
+          <ion-button
+            expand="block"
+            class="submit-button"
+            (click)="updatePlayer()">
 
-          Guardar cambios
+            Guardar cambios
 
-        </ion-button>
-      </ion-card-content>
-    </ion-card>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
 
   }
 
   @if (authService.isLoggedIn()) {
-    <ion-item>
-      <ion-input
-        type="number"
-        label="Valoración"
-        min="0"
-        max="5"
-        [value]="rating()"
-        (ionInput)="rating.set(+$any($event.detail).value)">
-      </ion-input>
-    </ion-item>
+    <div class="form-shell">
+      <ion-card class="compact-card">
+        <ion-card-content class="compact-form">
+          <ion-item>
+            <ion-input
+              type="number"
+              label="Valoración"
+              labelPlacement="floating"
+              min="0"
+              max="5"
+              [value]="rating()"
+              (ionInput)="rating.set(+$any($event.detail).value)">
+            </ion-input>
+          </ion-item>
 
-    <ion-item>
-      <ion-textarea
-        label="Comentario"
-        maxlength="1000"
-        counter="true"
-        [value]="text()"
-        (ionInput)="text.set($any($event.detail).value)">
-      </ion-textarea>
-    </ion-item>
+          <ion-item>
+            <ion-textarea
+              label="Comentario"
+              labelPlacement="floating"
+              maxlength="1000"
+              counter="true"
+              [value]="text()"
+              (ionInput)="text.set($any($event.detail).value)">
+            </ion-textarea>
+          </ion-item>
 
-    <ion-button
-      expand="block"
-      (click)="createComment()">
-
-      Crear comentario
-    </ion-button>
-  }
-
-  @for (comment of comments(); track comment.id) {
-
-    <ion-card>
-
-      <ion-card-content>
-
-        <p>{{ comment.text }}</p>
-
-        <p>Valoración: {{ comment.rating }}</p>
-
-        <p>Latitud: {{ comment.latitude }}</p>
-
-        <p>Longitud: {{ comment.longitude }}</p>
-
-        @if (authService.isAdmin()) {
           <ion-button
             expand="block"
-            color="danger"
-            fill="outline"
-            (click)="deleteComment(comment.id)">
+            class="submit-button"
+            (click)="createComment()">
 
-            Borrar comentario
+            Crear comentario
 
           </ion-button>
-        }
-
-      </ion-card-content>
-
-    </ion-card>
-
+        </ion-card-content>
+      </ion-card>
+    </div>
   }
+
+  <section class="comments-list">
+    @for (comment of comments(); track comment.id) {
+
+      <ion-card class="comment-card">
+
+        <ion-card-content class="comment-card-content">
+
+          <p>{{ comment.text }}</p>
+
+          <p>Valoración: {{ comment.rating }}</p>
+
+          <p>Latitud: {{ comment.latitude }}</p>
+
+          <p>Longitud: {{ comment.longitude }}</p>
+
+          @if (authService.isAdmin()) {
+            <div class="comment-actions">
+              <ion-button
+                size="small"
+                color="danger"
+                fill="outline"
+                (click)="deleteComment(comment.id)">
+
+                Borrar comentario
+
+              </ion-button>
+            </div>
+          }
+
+        </ion-card-content>
+
+      </ion-card>
+
+    }
+  </section>
 
 </ion-content>

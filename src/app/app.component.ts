@@ -11,7 +11,7 @@ import {
   IonItem
 } from '@ionic/angular/standalone';
 
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
 
 @Component({
@@ -31,9 +31,15 @@ import { AuthService } from './core/services/auth.service';
   ]
 })
 export class AppComponent {
+
   authService = inject(AuthService);
+
+  private router = inject(Router);
 
   async logout() {
     await this.authService.logout();
+    await this.router.navigateByUrl('/players', {
+      replaceUrl: true
+    });
   }
 }

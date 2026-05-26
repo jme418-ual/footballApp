@@ -16,6 +16,7 @@
 
     <ion-input
       label="Nombre"
+      labelPlacement="floating"
       [value]="name()"
       (ionInput)="name.set($any($event.detail).value)">
     </ion-input>
@@ -26,6 +27,7 @@
 
     <ion-input
       label="Equipo"
+      labelPlacement="floating"
       [value]="team()"
       (ionInput)="team.set($any($event.detail).value)">
     </ion-input>
@@ -36,6 +38,7 @@
 
     <ion-input
       label="Liga"
+      labelPlacement="floating"
       [value]="league()"
       (ionInput)="league.set($any($event.detail).value)">
     </ion-input>
@@ -46,6 +49,7 @@
 
     <ion-input
       label="URL de imagen"
+      labelPlacement="floating"
       [value]="imageUrl()"
       (ionInput)="imageUrl.set($any($event.detail).value)">
     </ion-input>
@@ -80,6 +84,7 @@
     <ion-input
       type="number"
       label="Latitud"
+      labelPlacement="floating"
       [value]="latitude()"
       (ionInput)="latitude.set($any($event.detail).value ? +$any($event.detail).value : null)">
     </ion-input>
@@ -91,6 +96,7 @@
     <ion-input
       type="number"
       label="Longitud"
+      labelPlacement="floating"
       [value]="longitude()"
       (ionInput)="longitude.set($any($event.detail).value ? +$any($event.detail).value : null)">
     </ion-input>
@@ -98,11 +104,12 @@
   </ion-item>
 
   <p class="helper-text">
-    Puedes usar la ubicación actual o editar manualmente las coordenadas antes de guardar.
+    La ubicación se obtiene automáticamente, pero puedes editarla antes de guardar.
   </p>
 
   <ion-button
     expand="block"
+    [disabled]="!name().trim()"
     (click)="createPlayer()">
 
     Crear jugador

@@ -4,11 +4,6 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonImg,
   IonButton,
   IonButtons,
   IonMenuButton
@@ -16,11 +11,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { PlayersService } from '../../../core/services/players.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-players-list',
   templateUrl: './players-list.page.html',
+  styleUrls: ['./players-list.page.scss'],
   standalone: true,
   imports: [
     CommonModule,
@@ -38,7 +34,8 @@ import { RouterLink } from '@angular/router';
 export class PlayersListPage {
 
   private playersService = inject(PlayersService);
-  private authService = inject(AuthService);
+  authService = inject(AuthService);
+  private router = inject(Router);
 
   players = this.playersService.players;
 
@@ -48,5 +45,8 @@ export class PlayersListPage {
 
   async logout() {
     await this.authService.logout();
+    await this.router.navigateByUrl('/players', {
+      replaceUrl: true
+    });
   }
 }

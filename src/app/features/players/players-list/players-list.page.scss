@@ -1,0 +1,36 @@
+.players-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
+	row-gap: 60px;
+	column-gap: 18px;
+	align-items: start;
+	justify-content: center;
+}
+
+.player-tile {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+  width: 220px;
+  height: 100%;
+}
+
+.player-tile player-card {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+@media (max-width: 480px) {
+	.players-grid {
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	}
+
+	.player-tile {
+		width: 100%;
+	}
+}
+
+.detail-button {
+  --border-radius: 9px 9px 18px 18px !important;
+}

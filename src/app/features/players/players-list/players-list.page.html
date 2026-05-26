@@ -6,29 +6,37 @@
     </ion-buttons>
 
     <ion-title>Jugadores</ion-title>
-
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
 
-  @for (player of players(); track player.id) {
+  <div class="players-grid">
 
-    <player-card
-      [name]="player.name"
-      [team]="player.team"
-      [league]="player.league"
-      [imageUrl]="player.imageUrl">
-    </player-card>
+    @for (player of players(); track player.id) {
 
-    <ion-button
-      expand="block"
-      [routerLink]="['/players', player.id]">
+      <div class="player-tile">
 
-      Ver detalle
+        <player-card
+          [name]="player.name"
+          [team]="player.team"
+          [league]="player.league"
+          [imageUrl]="player.imageUrl">
+        </player-card>
 
-    </ion-button>
+        <ion-button
+          expand="block"
+          [routerLink]="['/players', player.id]"
+          class="detail-button">
 
-  }
+          Ver detalle
+
+        </ion-button>
+
+      </div>
+
+    }
+
+  </div>
 
 </ion-content>

@@ -58,9 +58,17 @@ export class PlayerSearchPage {
 
   async search() {
 
+    if (!this.query().trim()) {
+      await this.uiService.showToast(
+        'Introduce el nombre de un jugador',
+        'warning'
+      );
+      return;
+    }
+
     const players =
       await this.playersService.searchExternalPlayers(
-        this.query()
+        this.query().trim()
       );
 
     this.results.set(players);

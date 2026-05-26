@@ -15,13 +15,14 @@ import {
   IonBackButton
 } from '@ionic/angular/standalone';
 
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { UiService } from '../../../core/services/ui.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [
     FormsModule,
@@ -33,7 +34,8 @@ import { UiService } from '../../../core/services/ui.service';
     IonInput,
     IonButton,
     IonButtons,
-    IonBackButton
+    IonBackButton,
+    RouterLink
   ]
 })
 export class LoginPage {
@@ -44,8 +46,20 @@ export class LoginPage {
 
   email = signal('');
   password = signal('');
+  errorMessage = signal('');
 
   async login() {
+
+    this.errorMessage.set('');
+
+    if (!this.email() || !this.password()) {
+      await this.uiService.showToast(
+        'Introduce email y contraseña',
+        'warning'
+      );
+      return;
+    }
+
     try {
 
       await this.authService.login(
@@ -53,14 +67,26 @@ export class LoginPage {
         this.password()
       );
 
-      await this.router.navigateByUrl('/players');
+      await this.router.navigateByUrl('/players', {
+        replaceUrl: true
+      });
 
     } catch (error) {
+
       console.error(error);
+
       await this.uiService.showToast(
         'Credenciales incorrectas o usuario no registrado',
         'danger'
       );
+    }
+  }
+
+  async ionViewWillEnter() {
+    if (this.authService.isLoggedIn()) {
+      await this.router.navigateByUrl('/players', {
+        replaceUrl: true
+      });
     }
   }
 }

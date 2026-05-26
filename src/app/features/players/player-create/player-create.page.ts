@@ -91,6 +91,38 @@ export class PlayerCreatePage {
 
   async createPlayer() {
 
+    if (!this.name().trim()) {
+      await this.uiService.showToast(
+        'El nombre del jugador es obligatorio',
+        'warning'
+      );
+      return;
+    }
+
+    if (this.imageUrl() && !this.isValidUrl(this.imageUrl())) {
+      await this.uiService.showToast(
+        'La URL de imagen no es válida',
+        'warning'
+      );
+      return;
+    }
+
+    if (this.latitude() !== null && (this.latitude()! < -90 || this.latitude()! > 90)) {
+      await this.uiService.showToast(
+        'La latitud debe estar entre -90 y 90',
+        'warning'
+      );
+      return;
+    }
+
+    if (this.longitude() !== null && (this.longitude()! < -180 || this.longitude()! > 180)) {
+      await this.uiService.showToast(
+        'La longitud debe estar entre -180 y 180',
+        'warning'
+      );
+      return;
+    }
+
     const loading =
       await this.uiService.showLoading('Creando jugador...');
 
@@ -131,5 +163,18 @@ export class PlayerCreatePage {
 
   async ionViewWillEnter() {
     await this.loadCurrentLocation();
+  }
+
+  private isValidUrl(value: string): boolean {
+    if (!value) {
+      return true;
+    }
+
+    try {
+      new URL(value);
+      return true;
+    } catch {
+      return false;
+    }
   }
 }
